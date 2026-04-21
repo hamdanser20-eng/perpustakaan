@@ -2,409 +2,275 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perpustakaan Digital - Laporan Pengembalian</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>LibFlow | Sistem Perpustakaan Modern</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 'sans': ['Poppins', 'system-ui', 'sans-serif'] },
+                    animation: { 
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'spin-slow': 'spin 8s linear infinite'
+                    },
+                    boxShadow: {
+                        'neon': '0 0 20px rgba(6, 182, 212, 0.5)',
+                        'neon-pink': '0 0 20px rgba(236, 72, 153, 0.4)'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
+        * { font-family: 'Space Grotesk', 'Poppins', sans-serif; }
+        
+        .bg-gradient-cyber {
+            background: linear-gradient(145deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            background-attachment: fixed;
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+        
+        .glass-morph {
+            background: rgba(15, 25, 45, 0.75);
+            backdrop-filter: blur(16px);
+            border-radius: 2rem;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.5);
         }
-
-        .container {
-            max-width: 1400px;
-            margin: auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-            animation: fadeIn 0.5s ease;
+        
+        .glass-morph-light {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        
+        .btn-cyber {
+            background: linear-gradient(95deg, #06b6d4, #3b82f6);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
         }
-
-        .navbar {
-            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+        
+        .btn-cyber:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.5);
+        }
+        
+        .btn-cyber-secondary {
+            background: linear-gradient(95deg, #ec4899, #f43f5e);
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+        }
+        
+        .btn-cyber-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(236, 72, 153, 0.5);
+        }
+        
+        .table-cyber td, .table-cyber th {
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+            vertical-align: middle;
+        }
+        
+        .table-cyber tbody tr {
+            transition: all 0.2s;
+        }
+        
+        .table-cyber tbody tr:hover {
+            background: rgba(6, 182, 212, 0.1);
+            transform: scale(1.01);
+        }
+        
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #1a1a2e; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #06b6d4, #3b82f6); border-radius: 10px; }
+        
+        .input-cyber {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 1rem;
+            transition: all 0.2s;
             color: white;
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
         }
-
-        .navbar h2 {
-            font-size: 1.8rem;
-        }
-
-        .navbar h2 span {
-            color: #e67e22;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .user-info span {
-            background: rgba(255,255,255,0.2);
-            padding: 8px 15px;
-            border-radius: 20px;
-        }
-
-        .btn-logout {
-            background: #e67e22;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            color: white;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .btn-logout:hover {
-            background: #d35400;
-            transform: scale(1.05);
-        }
-
-        .tabs {
-            background: #ecf0f1;
-            padding: 0 20px;
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-
-        .tablink {
-            background: none;
-            border: none;
-            padding: 15px 25px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: all 0.3s;
-            border-radius: 10px 10px 0 0;
-        }
-
-        .tablink:hover {
-            background: rgba(230,126,34,0.1);
-        }
-
-        .tablink.active {
-            background: white;
-            color: #e67e22;
-            border-bottom: 3px solid #e67e22;
-        }
-
-        .tabcontent {
-            display: none;
-            padding: 30px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .tabcontent.active {
-            display: block;
-        }
-
-        .card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        input, select, textarea {
-            padding: 10px 15px;
-            margin: 5px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        input:focus, select:focus {
+        
+        .input-cyber:focus {
             outline: none;
-            border-color: #e67e22;
-            box-shadow: 0 0 5px rgba(230,126,34,0.3);
+            border-color: #06b6d4;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+            background: rgba(255, 255, 255, 0.1);
         }
-
-        button {
-            padding: 10px 20px;
-            margin: 5px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
+        
+        .input-cyber::placeholder {
+            color: rgba(255, 255, 255, 0.4);
         }
-
-        .btn-primary {
-            background: #3498db;
-            color: white;
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .btn-primary:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -12px rgba(6, 182, 212, 0.3);
         }
-
-        .btn-success {
-            background: #27ae60;
-            color: white;
+        
+        .badge-cyber {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2));
+            border: 1px solid rgba(6, 182, 212, 0.5);
+            border-radius: 9999px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.7rem;
+            font-weight: 600;
         }
-
-        .btn-success:hover {
-            background: #229954;
-        }
-
-        .btn-danger {
-            background: #e74c3c;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #c0392b;
-        }
-
-        .btn-warning {
-            background: #e67e22;
-            color: white;
-        }
-
-        .btn-warning:hover {
-            background: #d35400;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-
-        th {
-            background: #34495e;
-            color: white;
-            font-weight: bold;
-        }
-
-        tr:hover {
-            background: #f5f5f5;
-        }
-
-        .error {
-            color: #e74c3c;
-            margin-top: 10px;
-            padding: 10px;
-            background: #fdeaea;
-            border-radius: 8px;
-        }
-
-        .success {
-            color: #27ae60;
-            margin-top: 10px;
-            padding: 10px;
-            background: #eafaf1;
-            border-radius: 8px;
-        }
-
-        .info {
-            margin-top: 20px;
-            padding: 15px;
-            background: #e8f4fd;
-            border-radius: 10px;
-            font-size: 14px;
-        }
-
-        .login-card {
-            max-width: 400px;
-            margin: 50px auto;
-            text-align: center;
-        }
-
-        .login-card input {
-            width: 100%;
-            margin: 10px 0;
-        }
-
-        .login-card button {
-            width: 100%;
-            margin: 10px 0;
-        }
-
-        h3 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            border-left: 4px solid #e67e22;
-            padding-left: 15px;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 50px;
-            font-size: 1.2rem;
-            color: #666;
-        }
-
-        .modal {
-            display: none;
+        
+        .floating-element {
             position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            animation: fadeIn 0.2s ease;
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 30px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 500px;
-            position: relative;
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .close {
-            position: absolute;
-            right: 20px;
-            top: 15px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            color: #999;
-        }
-
-        .close:hover {
-            color: #333;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-
-        .badge {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            display: inline-block;
-        }
-
-        .badge-dipinjam {
-            background: #fff3e0;
-            color: #e67e22;
-        }
-
-        .badge-terlambat {
-            background: #fee;
-            color: #e74c3c;
-        }
-
-        .badge-dikembalikan {
-            background: #e8f8f5;
-            color: #27ae60;
-        }
-
-        .denda {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-
-        .denda-zero {
-            color: #27ae60;
-        }
-
-        .stok-tersedia {
-            color: #27ae60;
-            font-weight: bold;
-        }
-
-        .stok-habis {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                text-align: center;
-                gap: 15px;
-            }
-            .tablink {
-                padding: 10px 15px;
-                font-size: 12px;
-            }
-            .tabcontent {
-                padding: 15px;
-            }
-            table {
-                font-size: 12px;
-            }
-            th, td {
-                padding: 8px;
-            }
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: 0;
+            pointer-events: none;
         }
     </style>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js",
+                "firebase/firestore": "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
+            }
+        }
+    </script>
 </head>
-<body>
-    <div id="app">
-        <div class="loading">Memuat Aplikasi...</div>
+<body class="bg-gradient-cyber text-gray-200 min-h-screen flex flex-col overflow-x-hidden">
+
+    <!-- Floating Elements Cyberpunk -->
+    <div class="floating-element w-96 h-96 bg-cyan-500/20 top-20 -left-48 animate-pulse-slow"></div>
+    <div class="floating-element w-80 h-80 bg-pink-500/20 bottom-20 -right-48 animate-pulse-slow" style="animation-delay: 2s;"></div>
+    <div class="floating-element w-64 h-64 bg-blue-500/20 top-1/2 left-1/3 animate-pulse-slow" style="animation-delay: 4s;"></div>
+
+    <div id="app" class="relative z-10 container mx-auto px-4 py-6 max-w-7xl flex-grow">
+        
+        <!-- Login Section -->
+        <div id="authSection" class="flex justify-center items-center min-h-[85vh]">
+            <div class="glass-morph w-full max-w-md p-8 card-hover">
+                <div class="text-center mb-6">
+                    <div class="inline-block p-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 shadow-lg mb-3">
+                        <i class="fas fa-book-open text-4xl text-white"></i>
+                    </div>
+                    <h2 class="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">LibFlow</h2>
+                    <p class="text-cyan-300 text-sm mt-1">Next-Gen Library System</p>
+                    <p class="text-gray-400 text-xs mt-2">SMK Insan Cemerlang</p>
+                </div>
+                
+                <div class="flex gap-2 mb-6 bg-gray-800/50 p-1 rounded-2xl">
+                    <button id="loginTabBtn" class="w-1/2 py-2.5 font-semibold rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg transition-all">Login</button>
+                    <button id="registerTabBtn" class="w-1/2 py-2.5 font-semibold rounded-xl text-gray-300 hover:text-white transition-all">Register</button>
+                </div>
+                
+                <div id="loginForm">
+                    <div class="mb-4">
+                        <i class="fas fa-user absolute mt-4 ml-3 text-cyan-400"></i>
+                        <input type="text" id="loginUsername" placeholder="Username" class="input-cyber w-full p-3 pl-10">
+                    </div>
+                    <div class="mb-5 relative">
+                        <i class="fas fa-lock absolute mt-4 ml-3 text-cyan-400"></i>
+                        <input type="password" id="loginPassword" placeholder="Password" class="input-cyber w-full p-3 pl-10 pr-10">
+                        <i class="fas fa-eye-slash absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-cyan-400 hover:text-cyan-300 transition" id="toggleLoginPassword"></i>
+                    </div>
+                    <button id="doLoginBtn" class="btn-cyber w-full text-white py-3 rounded-xl font-bold text-lg">🚀 Masuk Sekarang</button>
+                </div>
+                
+                <div id="registerForm" class="hidden">
+                    <input type="text" id="regName" placeholder="Nama Lengkap" class="input-cyber w-full mb-3 p-3">
+                    <input type="text" id="regClass" placeholder="Kelas" class="input-cyber w-full mb-3 p-3">
+                    <input type="text" id="regPhone" placeholder="Nomor Telepon" class="input-cyber w-full mb-3 p-3">
+                    <input type="text" id="regUsername" placeholder="Username" class="input-cyber w-full mb-3 p-3">
+                    <div class="relative mb-4">
+                        <input type="password" id="regPassword" placeholder="Password" class="input-cyber w-full p-3 pr-10">
+                        <i class="fas fa-eye-slash absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-cyan-400" id="toggleRegPassword"></i>
+                    </div>
+                    <button id="doRegisterBtn" class="btn-cyber-secondary w-full text-white py-3 rounded-xl font-bold">✨ Daftar Sekarang</button>
+                </div>
+                
+                <p class="text-xs text-center text-gray-400 mt-6">
+                    <i class="fas fa-terminal mr-1"></i> Demo: admin / admin123
+                </p>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboardSection" class="hidden">
+            <!-- Header -->
+            <div class="glass-morph p-5 flex flex-wrap justify-between items-center mb-6">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center">
+                        <i class="fas fa-bolt text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">LibFlow Dashboard</h1>
+                        <p class="text-gray-300 text-sm">Welcome, <span id="userNameDisplay" class="text-cyan-400 font-semibold"></span> · <span id="userRoleBadge" class="badge-cyber ml-1"></span></p>
+                    </div>
+                </div>
+                <button id="logoutBtn" class="bg-gray-800/50 hover:bg-gray-700/50 text-gray-300 hover:text-white px-5 py-2 rounded-full transition-all border border-gray-600">
+                    <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                </button>
+            </div>
+            
+            <!-- Navigation -->
+            <div id="navTabs" class="flex flex-wrap gap-3 mb-6"></div>
+            
+            <!-- Content -->
+            <div id="contentPanel" class="glass-morph p-6 min-h-[500px]">
+                <div class="text-center text-cyan-400">
+                    <i class="fas fa-spinner fa-pulse text-3xl mb-2"></i>
+                    <p>Loading system...</p>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script>
+    <footer class="relative z-10 text-center py-4 text-gray-400 text-sm border-t border-gray-800/50 bg-black/20 backdrop-blur-sm mt-4">
+        <div class="container mx-auto px-4">
+            <i class="fas fa-bolt text-cyan-400 mr-1"></i> LibFlow v2.0 · Powered by Firebase
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="modalForm" class="fixed inset-0 flex items-center justify-center z-50 hidden transition-all" style="background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);">
+        <div class="glass-morph w-full max-w-md p-6 rounded-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modalTitle" class="text-xl font-bold text-cyan-400"></h3>
+                <button id="closeModalBtn" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <div id="modalBody"></div>
+            <div class="mt-5 flex justify-end gap-3">
+                <button id="modalCancelBtn" class="px-4 py-2 rounded-xl border border-gray-600 text-gray-300 hover:bg-gray-800 transition">Batal</button>
+                <button id="modalConfirmBtn" class="btn-cyber px-4 py-2 rounded-xl text-white">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="paymentModal" class="fixed inset-0 flex items-center justify-center z-50 hidden transition-all" style="background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);">
+        <div class="glass-morph w-full max-w-md p-6 rounded-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-cyan-400"><i class="fas fa-coins mr-2"></i>Bayar Denda</h3>
+                <button id="closePaymentBtn" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <div id="paymentBody"></div>
+            <div class="mt-5 flex justify-end gap-3">
+                <button id="cancelPaymentBtn" class="px-4 py-2 rounded-xl border border-gray-600 text-gray-300 hover:bg-gray-800 transition">Batal</button>
+                <button id="confirmPaymentBtn" class="btn-cyber-secondary px-4 py-2 rounded-xl text-white">Kirim Bukti</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'firebase/app';
+        import { getFirestore, collection, doc, getDocs, getDoc, addDoc, deleteDoc, updateDoc, query, orderBy, where } from 'firebase/firestore';
+
         // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAR8nOkH-0Ik8fwcEMgjsnqKXMvR-qQqUk",
@@ -415,1005 +281,634 @@
             appId: "1:150953324871:web:fe3d3214ce3bc6e1121c62",
             measurementId: "G-1R8MDPMGPK"
         };
-
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        // Collections
+        const booksCol = collection(db, "books");
+        const membersCol = collection(db, "members");
+        const usersCol = collection(db, "users");
+        const loansCol = collection(db, "loans");
+        const returnsCol = collection(db, "returns");
+        
         let currentUser = null;
-        let currentRole = null;
-
-        function showMessage(msg, type = 'error') {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = type === 'error' ? 'error' : 'success';
-            msgDiv.innerHTML = msg;
-            msgDiv.style.position = 'fixed';
-            msgDiv.style.top = '20px';
-            msgDiv.style.right = '20px';
-            msgDiv.style.zIndex = '9999';
-            msgDiv.style.animation = 'slideIn 0.3s ease';
-            document.body.appendChild(msgDiv);
-            setTimeout(() => msgDiv.remove(), 3000);
+        let modalCallback = null;
+        const DAILY_FINE = 1000;
+        
+        // Helper Functions
+        function showToast(msg, isError = false) {
+            const toast = document.createElement("div");
+            toast.className = `fixed bottom-5 right-5 z-50 px-5 py-3 rounded-xl shadow-2xl text-white font-medium flex items-center gap-2 animate-bounce-slow ${isError ? 'bg-gradient-to-r from-red-500 to-pink-500' : 'bg-gradient-to-r from-cyan-500 to-blue-500'}`;
+            toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i> ${msg}`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
         }
-
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
+        
+        function formatDate(dateObj) {
+            if (!dateObj) return '-';
+            return new Date(dateObj).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
         }
-
-        async function initializeDatabase() {
-            try {
-                const booksSnapshot = await db.collection('books').get();
-                if (booksSnapshot.empty) {
-                    const defaultBooks = [
-                        { judul: "Pemrograman Web dengan PHP", penerbit: "Elex Media Komputindo", stokTotal: 5 },
-                        { judul: "Basis Data MySQL", penerbit: "Informatika Bandung", stokTotal: 3 },
-                        { judul: "Algoritma dan Struktur Data", penerbit: "Andi Publisher", stokTotal: 4 },
-                        { judul: "Pemrograman Java Dasar", penerbit: "Elex Media Komputindo", stokTotal: 2 },
-                        { judul: "Framework Laravel", penerbit: "Informatika Bandung", stokTotal: 6 },
-                        { judul: "React JS Modern", penerbit: "Andi Publisher", stokTotal: 3 }
-                    ];
-                    for (const book of defaultBooks) {
-                        await db.collection('books').add(book);
-                    }
-                }
-
-                const membersSnapshot = await db.collection('members').get();
-                if (membersSnapshot.empty) {
-                    const defaultMembers = [
-                        { nama: "siswa1", kelas: "XII RPL 1", telepon: "081234567890", tanggalDaftar: new Date().toISOString(), username: "siswa1", password: "siswa123" },
-                        { nama: "siswa2", kelas: "XII RPL 2", telepon: "081234567891", tanggalDaftar: new Date().toISOString(), username: "siswa2", password: "siswa123" },
-                        { nama: "siswa3", kelas: "XI RPL 1", telepon: "081234567892", tanggalDaftar: new Date().toISOString(), username: "siswa3", password: "siswa123" },
-                        { nama: "siswa4", kelas: "X RPL 1", telepon: "081234567893", tanggalDaftar: new Date().toISOString(), username: "siswa4", password: "siswa123" }
-                    ];
-                    for (const member of defaultMembers) {
-                        await db.collection('members').add(member);
-                    }
-                }
-                return true;
-            } catch (error) {
-                showMessage('Gagal terhubung ke Firebase: ' + error.message);
-                return false;
-            }
+        
+        function getDueDate(loanDate) {
+            const due = new Date(loanDate);
+            due.setDate(due.getDate() + 7);
+            return due.toISOString();
         }
-
-        function renderLogin() {
-            document.getElementById('app').innerHTML = `
-                <div class="container login-card">
-                    <div class="card">
-                        <h2>📚 Perpustakaan Digital</h2>
-                        <p style="color: #666; margin-bottom: 20px;">SMA Negeri Cemerlang</p>
-                        <input type="text" id="username" placeholder="Username" autocomplete="off">
-                        <input type="password" id="password" placeholder="Password">
-                        <button class="btn-primary" onclick="handleLogin()">Login</button>
-                        <div class="info">
-                            <strong>🔐 Akun Demo:</strong><br>
-                            👑 Admin: <strong>admin</strong> | password: <strong>admin123</strong><br>
-                            📖 Siswa: <strong>siswa1</strong> | password: <strong>siswa123</strong><br>
-                            📖 Siswa: <strong>siswa2</strong> | password: <strong>siswa123</strong>
-                        </div>
-                    </div>
-                </div>
-            `;
+        
+        function isOverdue(dueDate) {
+            return new Date() > new Date(dueDate);
         }
-
-        function renderApp() {
-            if (currentRole === 'admin') {
-                renderAdminDashboard();
-            } else if (currentRole === 'user') {
-                renderUserDashboard();
-            }
+        
+        function calculateLateFee(dueDateStr, returnDateStr) {
+            const due = new Date(dueDateStr);
+            const ret = new Date(returnDateStr);
+            if (ret <= due) return 0;
+            const diffDays = Math.ceil((ret - due) / (1000 * 60 * 60 * 24));
+            return diffDays * DAILY_FINE;
         }
-
-        async function renderAdminDashboard() {
-            document.getElementById('app').innerHTML = `
-                <div class="container">
-                    <div class="navbar">
-                        <h2>📖 <span>Admin Panel</span> - Perpustakaan Digital</h2>
-                        <div class="user-info">
-                            <span>👑 Admin: ${currentUser}</span>
-                            <button class="btn-logout" onclick="logout()">Logout</button>
-                        </div>
-                    </div>
-                    <div class="tabs">
-                        <button class="tablink" onclick="openTab('books')">📚 Data Buku</button>
-                        <button class="tablink" onclick="openTab('members')">👥 Kelola Anggota</button>
-                        <button class="tablink" onclick="openTab('transactions')">🔄 Transaksi</button>
-                        <button class="tablink active" onclick="openTab('returns')">📋 Data Pengembalian</button>
-                    </div>
-
-                    <div id="books" class="tabcontent">
-                        <div class="card">
-                            <h3>📚 Manajemen Buku</h3>
-                            <button class="btn-success" onclick="showAddBookModal()">+ Tambah Buku</button>
-                            <div id="bookList"><div class="loading">Memuat data buku...</div></div>
-                        </div>
-                    </div>
-
-                    <div id="members" class="tabcontent">
-                        <div class="card">
-                            <h3>👥 Manajemen Anggota</h3>
-                            <button class="btn-success" onclick="showAddMemberModal()">+ Tambah Anggota</button>
-                            <div id="memberList"><div class="loading">Memuat data anggota...</div></div>
-                        </div>
-                    </div>
-
-                    <div id="transactions" class="tabcontent">
-                        <div class="card">
-                            <h3>📋 Daftar Peminjaman Buku</h3>
-                            <div style="margin-bottom: 20px;">
-                                <button class="btn-success" onclick="showNewLoanModal()">+ Tambah Pinjaman Baru</button>
-                            </div>
-                            <div id="transactionTableContainer">
-                                <div class="loading">Memuat data transaksi...</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="returns" class="tabcontent active">
-                        <div class="card">
-                            <h3>📋 Laporan Data Pengembalian Buku</h3>
-                            <div id="returnsTableContainer">
-                                <div class="loading">Memuat data pengembalian...</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Modal Tambah Buku -->
-                <div id="bookModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close" onclick="closeBookModal()">&times;</span>
-                        <h3 style="margin-bottom: 20px;">📝 Form Tambah Buku Baru</h3>
-                        <div class="form-group">
-                            <label>📖 Judul Buku *</label>
-                            <input type="text" id="bookJudul" placeholder="Masukkan judul buku">
-                        </div>
-                        <div class="form-group">
-                            <label>🏢 Penerbit *</label>
-                            <input type="text" id="bookPenerbit" placeholder="Masukkan nama penerbit">
-                        </div>
-                        <div class="form-group">
-                            <label>📊 Stok Total *</label>
-                            <input type="number" id="bookStokTotal" placeholder="Jumlah stok total" min="0">
-                        </div>
-                        <button class="btn-success" onclick="saveBook()" style="width:100%; margin-top:10px;">💾 Simpan Buku</button>
-                    </div>
-                </div>
-
-                <!-- Modal Edit Buku -->
-                <div id="editBookModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close" onclick="closeEditBookModal()">&times;</span>
-                        <h3 style="margin-bottom: 20px;">✏️ Edit Data Buku</h3>
-                        <input type="hidden" id="editBookId">
-                        <div class="form-group">
-                            <label>📖 Judul Buku *</label>
-                            <input type="text" id="editBookJudul" placeholder="Masukkan judul buku">
-                        </div>
-                        <div class="form-group">
-                            <label>🏢 Penerbit *</label>
-                            <input type="text" id="editBookPenerbit" placeholder="Masukkan nama penerbit">
-                        </div>
-                        <div class="form-group">
-                            <label>📊 Stok Total *</label>
-                            <input type="number" id="editBookStokTotal" placeholder="Jumlah stok total" min="0">
-                        </div>
-                        <button class="btn-primary" onclick="updateBook()" style="width:100%; margin-top:10px;">💾 Update Buku</button>
-                    </div>
-                </div>
-
-                <!-- Modal Tambah Anggota -->
-                <div id="memberModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close" onclick="closeMemberModal()">&times;</span>
-                        <h3 style="margin-bottom: 20px;">📝 Form Tambah Anggota Baru</h3>
-                        <div class="form-group">
-                            <label>👤 Nama Lengkap *</label>
-                            <input type="text" id="memberNama" placeholder="Masukkan nama lengkap">
-                        </div>
-                        <div class="form-group">
-                            <label>🏫 Kelas *</label>
-                            <input type="text" id="memberKelas" placeholder="Contoh: XII RPL 1">
-                        </div>
-                        <div class="form-group">
-                            <label>📞 Nomor Telepon</label>
-                            <input type="tel" id="memberTelepon" placeholder="Contoh: 081234567890">
-                        </div>
-                        <div class="form-group">
-                            <label>📅 Tanggal Daftar</label>
-                            <input type="date" id="memberTanggalDaftar">
-                        </div>
-                        <div class="form-group">
-                            <label>🔑 Username *</label>
-                            <input type="text" id="memberUsername" placeholder="Username untuk login">
-                        </div>
-                        <div class="form-group">
-                            <label>🔒 Password *</label>
-                            <input type="password" id="memberPassword" placeholder="Password untuk login">
-                        </div>
-                        <button class="btn-success" onclick="saveMember()" style="width:100%; margin-top:10px;">💾 Simpan Anggota</button>
-                    </div>
-                </div>
-
-                <!-- Modal Edit Anggota -->
-                <div id="editMemberModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close" onclick="closeEditMemberModal()">&times;</span>
-                        <h3 style="margin-bottom: 20px;">✏️ Edit Data Anggota</h3>
-                        <input type="hidden" id="editMemberId">
-                        <div class="form-group">
-                            <label>👤 Nama Lengkap *</label>
-                            <input type="text" id="editMemberNama" placeholder="Masukkan nama lengkap">
-                        </div>
-                        <div class="form-group">
-                            <label>🏫 Kelas *</label>
-                            <input type="text" id="editMemberKelas" placeholder="Contoh: XII RPL 1">
-                        </div>
-                        <div class="form-group">
-                            <label>📞 Nomor Telepon</label>
-                            <input type="tel" id="editMemberTelepon" placeholder="Contoh: 081234567890">
-                        </div>
-                        <div class="form-group">
-                            <label>📅 Tanggal Daftar</label>
-                            <input type="date" id="editMemberTanggalDaftar">
-                        </div>
-                        <div class="form-group">
-                            <label>🔑 Username *</label>
-                            <input type="text" id="editMemberUsername" placeholder="Username untuk login">
-                        </div>
-                        <div class="form-group">
-                            <label>🔒 Password (kosongkan jika tidak diubah)</label>
-                            <input type="password" id="editMemberPassword" placeholder="Password baru">
-                        </div>
-                        <button class="btn-primary" onclick="updateMember()" style="width:100%; margin-top:10px;">💾 Update Anggota</button>
-                    </div>
-                </div>
-
-                <!-- Modal Tambah Pinjaman -->
-                <div id="loanModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close" onclick="closeLoanModal()">&times;</span>
-                        <h3 style="margin-bottom: 20px;">📝 Form Peminjaman Baru</h3>
-                        <div class="form-group">
-                            <label>👤 Pilih Anggota</label>
-                            <select id="modalMemberSelect">
-                                <option value="">-- Pilih Anggota --</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>📖 Pilih Buku</label>
-                            <select id="modalBookSelect">
-                                <option value="">-- Pilih Buku --</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>📅 Tanggal Peminjaman</label>
-                            <input type="date" id="modalTanggalPinjam">
-                        </div>
-                        <div class="form-group">
-                            <label>⏰ Jatuh Tempo (7 hari dari pinjam)</label>
-                            <input type="date" id="modalJatuhTempo" readonly style="background:#f0f0f0;">
-                        </div>
-                        <button class="btn-success" onclick="saveNewLoan()" style="width:100%; margin-top:10px;">💾 Simpan Peminjaman</button>
-                    </div>
-                </div>
-            `;
-
-            await loadBooksList();
-            await loadMembersList();
-            await loadTransactionsTable();
-            await loadReturnsData();
-            await populateModalSelects();
+        
+        // Data Cache
+        let cachedBooks = [], cachedMembers = [], cachedUsers = [];
+        
+        async function loadBooksForce() {
+            const snap = await getDocs(query(booksCol, orderBy("title")));
+            cachedBooks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            return cachedBooks;
         }
-
-        async function loadBooksList() {
-            const snapshot = await db.collection('books').get();
-            if (snapshot.empty) {
-                document.getElementById('bookList').innerHTML = '<p style="text-align:center; padding:20px;">📚 Belum ada data buku. Silakan tambah buku baru.</p>';
-                return;
-            }
-
-            const activeLoans = await db.collection('transactions').where('status', '==', 'dipinjam').get();
-            const borrowedCount = {};
-            activeLoans.forEach(loan => {
-                const bookId = loan.data().bookId;
-                borrowedCount[bookId] = (borrowedCount[bookId] || 0) + 1;
-            });
-            
-            let html = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Judul Buku</th>
-                            <th>Penerbit</th>
-                            <th>Stok Total</th>
-                            <th>Stok Tersedia</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-            
-            for (const doc of snapshot.docs) {
-                const data = doc.data();
-                const stokTotal = data.stokTotal || 0;
-                const dipinjam = borrowedCount[doc.id] || 0;
-                const stokTersedia = stokTotal - dipinjam;
-                const stokClass = stokTersedia <= 0 ? 'stok-habis' : 'stok-tersedia';
-                
-                html += `
-                    <tr>
-                        <td><strong>${escapeHtml(data.judul)}</strong></td>
-                        <td>${escapeHtml(data.penerbit)}</td>
-                        <td>${stokTotal}</td>
-                        <td class="${stokClass}">${stokTersedia < 0 ? 0 : stokTersedia}</td>
-                        <td>
-                            <button class="btn-warning" onclick="editBook('${doc.id}')">✏️ Edit</button>
-                            <button class="btn-danger" onclick="deleteBook('${doc.id}')">🗑️ Hapus</button>
-                        </td>
-                    </tr>
-                `;
-            }
-            
-            html += '</tbody></table>';
-            document.getElementById('bookList').innerHTML = html;
+        
+        async function loadMembersForce() {
+            const snap = await getDocs(query(membersCol, orderBy("name")));
+            cachedMembers = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            return cachedMembers;
         }
-
-        async function loadReturnsData() {
-            // Ambil semua transaksi yang sudah dikembalikan
-            const snapshot = await db.collection('transactions').where('status', '==', 'dikembalikan').get();
-            
-            if (snapshot.empty) {
-                document.getElementById('returnsTableContainer').innerHTML = '<p style="text-align:center; padding:20px;">📋 Belum ada data pengembalian buku.</p>';
-                return;
-            }
-
-            let html = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Peminjam</th>
-                            <th>Buku</th>
-                            <th>Tanggal Pinjam</th>
-                            <th>Jatuh Tempo</th>
-                            <th>Tanggal Kembali</th>
-                            <th>Status</th>
-                            <th>Denda</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            let totalDenda = 0;
-
-            for (const doc of snapshot.docs) {
-                const data = doc.data();
-                const member = await db.collection('members').doc(data.memberId).get();
-                const book = await db.collection('books').doc(data.bookId).get();
-                
-                const memberName = member.exists ? member.data().nama : '-';
-                const memberKelas = member.exists ? member.data().kelas : '';
-                const bookTitle = book.exists ? book.data().judul : '-';
-                
-                const tglPinjam = data.tanggalPinjam ? new Date(data.tanggalPinjam.toDate()) : null;
-                const tglKembali = data.tanggalKembali ? new Date(data.tanggalKembali.toDate()) : null;
-                
-                let jatuhTempo = null;
-                if (tglPinjam) {
-                    jatuhTempo = new Date(tglPinjam);
-                    jatuhTempo.setDate(jatuhTempo.getDate() + 7);
-                }
-
-                // Hitung denda (Rp 2000 per hari keterlambatan)
-                let denda = 0;
-                if (tglKembali && jatuhTempo) {
-                    const tglKembaliDate = new Date(tglKembali);
-                    tglKembaliDate.setHours(0, 0, 0, 0);
-                    const jatuhTempoDate = new Date(jatuhTempo);
-                    jatuhTempoDate.setHours(0, 0, 0, 0);
-                    
-                    if (tglKembaliDate > jatuhTempoDate) {
-                        const diffTime = Math.abs(tglKembaliDate - jatuhTempoDate);
-                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                        denda = diffDays * 2000;
-                        totalDenda += denda;
-                    }
-                }
-
-                const tglPinjamStr = tglPinjam ? tglPinjam.toLocaleDateString('id-ID') : '-';
-                const jatuhTempoStr = jatuhTempo ? jatuhTempo.toLocaleDateString('id-ID') : '-';
-                const tglKembaliStr = tglKembali ? tglKembali.toLocaleDateString('id-ID') : '-';
-                
-                const dendaFormatted = denda > 0 ? `Rp ${denda.toLocaleString('id-ID')}` : 'Rp 0';
-                const dendaClass = denda > 0 ? 'denda' : 'denda-zero';
-                
-                let statusText = 'Dikembalikan';
-                let statusBadge = 'badge-dikembalikan';
-                
-                // Cek apakah telat
-                if (denda > 0) {
-                    statusText = 'Terlambat';
-                    statusBadge = 'badge-terlambat';
-                }
-
-                html += `
-                    <tr>
-                        <td><strong>${escapeHtml(memberName)}</strong><br><small>${escapeHtml(memberKelas)}</small></td>
-                        <td>${escapeHtml(bookTitle)}</td>
-                        <td>${tglPinjamStr}</td>
-                        <td>${jatuhTempoStr}</td>
-                        <td>${tglKembaliStr}</td>
-                        <td><span class="badge ${statusBadge}">${statusText}</span></td>
-                        <td class="${dendaClass}">${dendaFormatted}</td>
-                    </tr>
-                `;
-            }
-
-            html += `
-                    </tbody>
-                    <tfoot>
-                        <tr style="background: #f0f0f0; font-weight: bold;">
-                            <td colspan="6" style="text-align: right;">Total Denda Keseluruhan:</td>
-                            <td class="denda">Rp ${totalDenda.toLocaleString('id-ID')}</td>
-                        </tr>
-                    </tfoot>
-                </table>
-            `;
-            
-            document.getElementById('returnsTableContainer').innerHTML = html;
+        
+        async function loadUsersForce() {
+            const snap = await getDocs(usersCol);
+            cachedUsers = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            return cachedUsers;
         }
-
-        window.showAddBookModal = () => {
-            document.getElementById('bookModal').style.display = 'block';
-            document.getElementById('bookJudul').value = '';
-            document.getElementById('bookPenerbit').value = '';
-            document.getElementById('bookStokTotal').value = '';
-        };
-
-        window.closeBookModal = () => {
-            document.getElementById('bookModal').style.display = 'none';
-        };
-
-        window.closeEditBookModal = () => {
-            document.getElementById('editBookModal').style.display = 'none';
-        };
-
-        window.saveBook = async () => {
-            const judul = document.getElementById('bookJudul').value.trim();
-            const penerbit = document.getElementById('bookPenerbit').value.trim();
-            const stokTotal = parseInt(document.getElementById('bookStokTotal').value);
-
-            if (!judul) {
-                showMessage('⚠️ Judul buku wajib diisi!');
-                return;
-            }
-            if (!penerbit) {
-                showMessage('⚠️ Penerbit wajib diisi!');
-                return;
-            }
-            if (isNaN(stokTotal) || stokTotal < 0) {
-                showMessage('⚠️ Stok total harus berupa angka positif!');
-                return;
-            }
-
-            await db.collection('books').add({
-                judul: judul,
-                penerbit: penerbit,
-                stokTotal: stokTotal
-            });
-            showMessage('✅ Buku berhasil ditambahkan!', 'success');
-            closeBookModal();
-            await loadBooksList();
-        };
-
-        window.editBook = async (id) => {
-            const doc = await db.collection('books').doc(id).get();
-            const data = doc.data();
-            
-            document.getElementById('editBookId').value = id;
-            document.getElementById('editBookJudul').value = data.judul || '';
-            document.getElementById('editBookPenerbit').value = data.penerbit || '';
-            document.getElementById('editBookStokTotal').value = data.stokTotal || 0;
-            
-            document.getElementById('editBookModal').style.display = 'block';
-        };
-
-        window.updateBook = async () => {
-            const id = document.getElementById('editBookId').value;
-            const judul = document.getElementById('editBookJudul').value.trim();
-            const penerbit = document.getElementById('editBookPenerbit').value.trim();
-            const stokTotal = parseInt(document.getElementById('editBookStokTotal').value);
-
-            if (!judul) {
-                showMessage('⚠️ Judul buku wajib diisi!');
-                return;
-            }
-            if (!penerbit) {
-                showMessage('⚠️ Penerbit wajib diisi!');
-                return;
-            }
-            if (isNaN(stokTotal) || stokTotal < 0) {
-                showMessage('⚠️ Stok total harus berupa angka positif!');
-                return;
-            }
-
-            await db.collection('books').doc(id).update({
-                judul: judul,
-                penerbit: penerbit,
-                stokTotal: stokTotal
-            });
-            showMessage('✅ Buku berhasil diupdate!', 'success');
-            closeEditBookModal();
-            await loadBooksList();
-        };
-
-        window.deleteBook = async (id) => {
-            const activeLoans = await db.collection('transactions')
-                .where('bookId', '==', id)
-                .where('status', '==', 'dipinjam')
-                .get();
-            
-            if (!activeLoans.empty) {
-                showMessage('⚠️ Buku sedang dipinjam, tidak dapat dihapus! Kembalikan buku terlebih dahulu.');
-                return;
-            }
-            
-            if (confirm('Yakin ingin menghapus buku ini?')) {
-                await db.collection('books').doc(id).delete();
-                showMessage('✅ Buku berhasil dihapus!', 'success');
-                await loadBooksList();
-            }
-        };
-
-        async function loadMembersList() {
-            const snapshot = await db.collection('members').get();
-            if (snapshot.empty) {
-                document.getElementById('memberList').innerHTML = '<p style="text-align:center; padding:20px;">👥 Belum ada data anggota. Silakan tambah anggota baru.</p>';
-                return;
-            }
-            
-            let html = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nama</th>
-                            <th>Kelas</th>
-                            <th>Telepon</th>
-                            <th>Tanggal Daftar</th>
-                            <th>Username</th>
-                            <th>Password</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-            
-            for (const doc of snapshot.docs) {
-                const data = doc.data();
-                const tglDaftar = data.tanggalDaftar ? new Date(data.tanggalDaftar).toLocaleDateString('id-ID') : '-';
-                
-                html += `
-                    <tr>
-                        <td><strong>${escapeHtml(data.nama)}</strong></td>
-                        <td>${escapeHtml(data.kelas)}</td>
-                        <td>${data.telepon ? escapeHtml(data.telepon) : '-'}</td>
-                        <td>${tglDaftar}</td>
-                        <td>${escapeHtml(data.username)}</td>
-                        <td><span style="font-family: monospace;">${escapeHtml(data.password)}</span></td>
-                        <td>
-                            <button class="btn-warning" onclick="editMember('${doc.id}')">✏️ Edit</button>
-                            <button class="btn-danger" onclick="deleteMember('${doc.id}')">🗑️ Hapus</button>
-                        </td>
-                    </tr>
-                `;
-            }
-            
-            html += '</tbody></table>';
-            document.getElementById('memberList').innerHTML = html;
+        
+        async function loadLoans() {
+            const loansSnap = await getDocs(query(loansCol, orderBy("loanDate", "desc")));
+            const loans = loansSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+            if (loans.length === 0) return [];
+            const bookIds = [...new Set(loans.map(l => l.bookId).filter(Boolean))];
+            const memberIds = [...new Set(loans.map(l => l.memberId).filter(Boolean))];
+            const [booksMap, membersMap] = await Promise.all([
+                (async () => { const map = new Map(); for (let id of bookIds) { const ds = await getDoc(doc(booksCol, id)); if (ds.exists()) map.set(ds.id, ds.data()); } return map; })(),
+                (async () => { const map = new Map(); for (let id of memberIds) { const ds = await getDoc(doc(membersCol, id)); if (ds.exists()) map.set(ds.id, ds.data()); } return map; })()
+            ]);
+            return loans.map(loan => ({
+                ...loan,
+                bookTitle: booksMap.get(loan.bookId)?.title || "-",
+                bookCover: booksMap.get(loan.bookId)?.cover || "📖",
+                memberName: membersMap.get(loan.memberId)?.name || "-"
+            }));
         }
-
-        window.showAddMemberModal = () => {
-            document.getElementById('memberModal').style.display = 'block';
-            document.getElementById('memberNama').value = '';
-            document.getElementById('memberKelas').value = '';
-            document.getElementById('memberTelepon').value = '';
-            document.getElementById('memberUsername').value = '';
-            document.getElementById('memberPassword').value = '';
-            
-            const today = new Date();
-            const yyyy = today.getFullYear();
-            const mm = String(today.getMonth() + 1).padStart(2, '0');
-            const dd = String(today.getDate()).padStart(2, '0');
-            document.getElementById('memberTanggalDaftar').value = `${yyyy}-${mm}-${dd}`;
-        };
-
-        window.closeMemberModal = () => {
-            document.getElementById('memberModal').style.display = 'none';
-        };
-
-        window.closeEditMemberModal = () => {
-            document.getElementById('editMemberModal').style.display = 'none';
-        };
-
-        window.saveMember = async () => {
-            const nama = document.getElementById('memberNama').value.trim();
-            const kelas = document.getElementById('memberKelas').value.trim();
-            const telepon = document.getElementById('memberTelepon').value.trim();
-            const tanggalDaftar = document.getElementById('memberTanggalDaftar').value;
-            const username = document.getElementById('memberUsername').value.trim();
-            const password = document.getElementById('memberPassword').value;
-
-            if (!nama) {
-                showMessage('⚠️ Nama anggota wajib diisi!');
-                return;
-            }
-            if (!kelas) {
-                showMessage('⚠️ Kelas wajib diisi!');
-                return;
-            }
-            if (!username) {
-                showMessage('⚠️ Username wajib diisi!');
-                return;
-            }
-            if (!password) {
-                showMessage('⚠️ Password wajib diisi!');
-                return;
-            }
-
-            const existingSnapshot = await db.collection('members').where('username', '==', username).get();
-            if (!existingSnapshot.empty) {
-                showMessage('⚠️ Username sudah digunakan! Gunakan username lain.');
-                return;
-            }
-
-            const memberData = {
-                nama: nama,
-                kelas: kelas,
-                telepon: telepon || '',
-                tanggalDaftar: tanggalDaftar ? new Date(tanggalDaftar).toISOString() : new Date().toISOString(),
-                username: username,
-                password: password
-            };
-
-            await db.collection('members').add(memberData);
-            showMessage('✅ Anggota berhasil ditambahkan!', 'success');
-            closeMemberModal();
-            await loadMembersList();
-            await populateModalSelects();
-        };
-
-        window.editMember = async (id) => {
-            const doc = await db.collection('members').doc(id).get();
-            const data = doc.data();
-            
-            document.getElementById('editMemberId').value = id;
-            document.getElementById('editMemberNama').value = data.nama || '';
-            document.getElementById('editMemberKelas').value = data.kelas || '';
-            document.getElementById('editMemberTelepon').value = data.telepon || '';
-            document.getElementById('editMemberUsername').value = data.username || '';
-            document.getElementById('editMemberPassword').value = '';
-            
-            if (data.tanggalDaftar) {
-                const tgl = new Date(data.tanggalDaftar);
-                const yyyy = tgl.getFullYear();
-                const mm = String(tgl.getMonth() + 1).padStart(2, '0');
-                const dd = String(tgl.getDate()).padStart(2, '0');
-                document.getElementById('editMemberTanggalDaftar').value = `${yyyy}-${mm}-${dd}`;
-            } else {
-                const today = new Date();
-                const yyyy = today.getFullYear();
-                const mm = String(today.getMonth() + 1).padStart(2, '0');
-                const dd = String(today.getDate()).padStart(2, '0');
-                document.getElementById('editMemberTanggalDaftar').value = `${yyyy}-${mm}-${dd}`;
-            }
-            
-            document.getElementById('editMemberModal').style.display = 'block';
-        };
-
-        window.updateMember = async () => {
-            const id = document.getElementById('editMemberId').value;
-            const nama = document.getElementById('editMemberNama').value.trim();
-            const kelas = document.getElementById('editMemberKelas').value.trim();
-            const telepon = document.getElementById('editMemberTelepon').value.trim();
-            const tanggalDaftar = document.getElementById('editMemberTanggalDaftar').value;
-            const username = document.getElementById('editMemberUsername').value.trim();
-            const password = document.getElementById('editMemberPassword').value;
-
-            if (!nama) {
-                showMessage('⚠️ Nama anggota wajib diisi!');
-                return;
-            }
-            if (!kelas) {
-                showMessage('⚠️ Kelas wajib diisi!');
-                return;
-            }
-            if (!username) {
-                showMessage('⚠️ Username wajib diisi!');
-                return;
-            }
-
-            const existingSnapshot = await db.collection('members').where('username', '==', username).get();
-            if (!existingSnapshot.empty) {
-                for (const doc of existingSnapshot.docs) {
-                    if (doc.id !== id) {
-                        showMessage('⚠️ Username sudah digunakan oleh anggota lain!');
-                        return;
-                    }
-                }
-            }
-
-            const updateData = {
-                nama: nama,
-                kelas: kelas,
-                telepon: telepon || '',
-                tanggalDaftar: tanggalDaftar ? new Date(tanggalDaftar).toISOString() : new Date().toISOString(),
-                username: username
-            };
-            
-            if (password) {
-                updateData.password = password;
-            }
-
-            await db.collection('members').doc(id).update(updateData);
-            showMessage('✅ Data anggota berhasil diupdate!', 'success');
-            closeEditMemberModal();
-            await loadMembersList();
-            await populateModalSelects();
-        };
-
-        window.deleteMember = async (id) => {
-            if (confirm('Yakin ingin menghapus anggota ini? Semua riwayat peminjaman anggota akan tetap tersimpan.')) {
-                await db.collection('members').doc(id).delete();
-                showMessage('✅ Anggota berhasil dihapus!', 'success');
-                await loadMembersList();
-                await populateModalSelects();
-            }
-        };
-
-        async function loadTransactionsTable() {
-            const snapshot = await db.collection('transactions').get();
-            if (snapshot.empty) {
-                document.getElementById('transactionTableContainer').innerHTML = '<p style="text-align:center; padding:20px;">📋 Belum ada transaksi peminjaman.</p>';
-                return;
-            }
-
-            let html = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Peminjam</th>
-                            <th>Buku</th>
-                            <th>Status</th>
-                            <th>Tanggal Peminjaman</th>
-                            <th>Jatuh Tempo</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-
-            for (const doc of snapshot.docs) {
-                const data = doc.data();
-                const member = await db.collection('members').doc(data.memberId).get();
-                const book = await db.collection('books').doc(data.bookId).get();
-                
-                const tglPinjam = data.tanggalPinjam ? new Date(data.tanggalPinjam.toDate()) : null;
-                
-                let jatuhTempo = null;
-                if (tglPinjam) {
-                    jatuhTempo = new Date(tglPinjam);
-                    jatuhTempo.setDate(jatuhTempo.getDate() + 7);
-                }
-
-                let statusText = '';
-                let statusBadge = '';
-                let isOverdue = false;
-
-                if (data.status === 'dipinjam') {
-                    if (jatuhTempo && jatuhTempo < today) {
-                        statusText = 'Terlambat';
-                        statusBadge = 'badge-terlambat';
-                        isOverdue = true;
-                    } else {
-                        statusText = 'Dipinjam';
-                        statusBadge = 'badge-dipinjam';
-                    }
-                } else {
-                    statusText = 'Dikembalikan';
-                    statusBadge = 'badge-dikembalikan';
-                }
-
-                const tglPinjamStr = tglPinjam ? tglPinjam.toLocaleDateString('id-ID') : '-';
-                const jatuhTempoStr = jatuhTempo ? jatuhTempo.toLocaleDateString('id-ID') : '-';
-
-                html += `
-                    <tr>
-                        <td><strong>${member.exists ? member.data().nama : '-'}</strong><br><small>${member.exists ? member.data().kelas : ''}</small></td>
-                        <td>${book.exists ? book.data().judul : '-'}<br><small>${book.exists ? book.data().penerbit : ''}</small></td>
-                        <td><span class="badge ${statusBadge}">${statusText}</span></td>
-                        <td>${tglPinjamStr}</td>
-                        <td style="${isOverdue ? 'color:red; font-weight:bold;' : ''}">${jatuhTempoStr} ${isOverdue ? '⚠️' : ''}</td>
-                        <td>
-                            ${data.status === 'dipinjam' ? `<button class="btn-warning" onclick="returnBookFromAdmin('${doc.id}', '${data.bookId}')">📤 Kembalikan</button>` : '<span style="color:green;">✓ Selesai</span>'}
-                        </td>
-                    </tr>
-                `;
-            }
-
-            html += '</tbody></table>';
-            document.getElementById('transactionTableContainer').innerHTML = html;
-        }
-
-        window.returnBookFromAdmin = async (transId, bookId) => {
-            if (confirm('Konfirmasi pengembalian buku?')) {
-                await db.collection('transactions').doc(transId).update({
-                    status: 'dikembalikan',
-                    tanggalKembali: new Date()
-                });
-                showMessage('✅ Buku berhasil dikembalikan!', 'success');
-                await loadTransactionsTable();
-                await loadReturnsData();
-                await loadBooksList();
-                await populateModalSelects();
-            }
-        };
-
-        window.showNewLoanModal = async () => {
-            await populateModalSelects();
-            document.getElementById('loanModal').style.display = 'block';
-            
-            const today = new Date();
-            const yyyy = today.getFullYear();
-            const mm = String(today.getMonth() + 1).padStart(2, '0');
-            const dd = String(today.getDate()).padStart(2, '0');
-            const todayStr = `${yyyy}-${mm}-${dd}`;
-            document.getElementById('modalTanggalPinjam').value = todayStr;
-            
-            const dueDate = new Date(today);
-            dueDate.setDate(dueDate.getDate() + 7);
-            const dueYyyy = dueDate.getFullYear();
-            const dueMm = String(dueDate.getMonth() + 1).padStart(2, '0');
-            const dueDd = String(dueDate.getDate()).padStart(2, '0');
-            document.getElementById('modalJatuhTempo').value = `${dueYyyy}-${dueMm}-${dueDd}`;
-        };
-
-        window.closeLoanModal = () => {
-            document.getElementById('loanModal').style.display = 'none';
-        };
-
-        window.saveNewLoan = async () => {
-            const memberId = document.getElementById('modalMemberSelect').value;
-            const bookId = document.getElementById('modalBookSelect').value;
-            const tanggalPinjamStr = document.getElementById('modalTanggalPinjam').value;
-
-            if (!memberId || !bookId) {
-                showMessage('⚠️ Pilih anggota dan buku terlebih dahulu!');
-                return;
-            }
-
-            const bookDoc = await db.collection('books').doc(bookId).get();
-            const stokTotal = bookDoc.data().stokTotal || 0;
-            
-            const activeLoans = await db.collection('transactions')
-                .where('bookId', '==', bookId)
-                .where('status', '==', 'dipinjam')
-                .get();
-            const stokTersedia = stokTotal - activeLoans.size;
-            
-            if (stokTersedia <= 0) {
-                showMessage('⚠️ Stok buku habis! Tidak dapat meminjam.');
-                return;
-            }
-
-            const tanggalPinjam = new Date(tanggalPinjamStr);
-            tanggalPinjam.setHours(7, 0, 0, 0);
-
-            await db.collection('transactions').add({
-                memberId,
-                bookId,
-                tanggalPinjam: tanggalPinjam,
-                status: 'dipinjam'
-            });
-
-            showMessage('✅ Peminjaman baru berhasil ditambahkan!', 'success');
-            closeLoanModal();
-            await loadTransactionsTable();
-            await loadReturnsData();
-            await loadBooksList();
-            await populateModalSelects();
-        };
-
-        async function populateModalSelects() {
-            const members = await db.collection('members').get();
-            const books = await db.collection('books').get();
-            
-            const activeLoans = await db.collection('transactions').where('status', '==', 'dipinjam').get();
-            const borrowedCount = {};
-            activeLoans.forEach(loan => {
-                const bookId = loan.data().bookId;
-                borrowedCount[bookId] = (borrowedCount[bookId] || 0) + 1;
-            });
-            
-            let memberHtml = '<option value="">-- Pilih Anggota --</option>';
-            members.forEach(doc => memberHtml += `<option value="${doc.id}">${escapeHtml(doc.data().nama)} (${escapeHtml(doc.data().kelas)})</option>`);
-            
-            let bookHtml = '<option value="">-- Pilih Buku --</option>';
-            for (const doc of books.docs) {
-                const data = doc.data();
-                const stokTotal = data.stokTotal || 0;
-                const dipinjam = borrowedCount[doc.id] || 0;
-                const stokTersedia = stokTotal - dipinjam;
-                bookHtml += `<option value="${doc.id}" ${stokTersedia <= 0 ? 'disabled' : ''}>${escapeHtml(data.judul)} - Stok Tersedia: ${stokTersedia < 0 ? 0 : stokTersedia}</option>`;
-            }
-            
-            const memberSelect = document.getElementById('modalMemberSelect');
-            const bookSelect = document.getElementById('modalBookSelect');
-            if (memberSelect) memberSelect.innerHTML = memberHtml;
-            if (bookSelect) bookSelect.innerHTML = bookHtml;
-        }
-
-        function renderUserDashboard() {
-            document.getElementById('app').innerHTML = `<div class="container"><div class="card"><h3>Halaman Siswa</h3><button onclick="logout()">Logout</button></div></div>`;
-        }
-
-        window.openTab = (tabName) => {
-            const tabcontents = document.querySelectorAll('.tabcontent');
-            const tablinks = document.querySelectorAll('.tablink');
-            tabcontents.forEach(content => content.classList.remove('active'));
-            tablinks.forEach(link => link.classList.remove('active'));
-            document.getElementById(tabName).classList.add('active');
-            if (event && event.target) event.target.classList.add('active');
-            
-            if (tabName === 'books') {
-                loadBooksList();
-            } else if (tabName === 'returns') {
-                loadReturnsData();
-            }
-        };
-
-        window.handleLogin = () => {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            if (username === 'admin' && password === 'admin123') {
-                currentUser = username;
-                currentRole = 'admin';
-                renderApp();
-            } else {
-                const checkStudent = async () => {
-                    const members = await db.collection('members').where('username', '==', username).where('password', '==', password).get();
-                    if (!members.empty) {
-                        currentUser = username;
-                        currentRole = 'user';
-                        renderApp();
-                    } else {
-                        showMessage('Login gagal! Username atau password salah.');
-                    }
+        
+        async function loadReturns() {
+            const returnsSnap = await getDocs(query(returnsCol, orderBy("returnDate", "desc")));
+            const returns = returnsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+            if (returns.length === 0) return [];
+            const loanIds = [...new Set(returns.map(r => r.loanId))];
+            const loansMap = new Map();
+            for (let id of loanIds) { const ds = await getDoc(doc(loansCol, id)); if (ds.exists()) loansMap.set(ds.id, ds.data()); }
+            const bookIds = [...new Set([...loansMap.values()].map(loan => loan.bookId))];
+            const memberIds = [...new Set([...loansMap.values()].map(loan => loan.memberId))];
+            const [booksMap, membersMap] = await Promise.all([
+                (async () => { const map = new Map(); for (let id of bookIds) { const ds = await getDoc(doc(booksCol, id)); if (ds.exists()) map.set(ds.id, ds.data()); } return map; })(),
+                (async () => { const map = new Map(); for (let id of memberIds) { const ds = await getDoc(doc(membersCol, id)); if (ds.exists()) map.set(ds.id, ds.data()); } return map; })()
+            ]);
+            return returns.map(ret => {
+                const loan = loansMap.get(ret.loanId);
+                if (!loan) return { ...ret, bookTitle: "-", memberName: "-", loanDate: "-", dueDate: "-" };
+                return {
+                    ...ret,
+                    bookTitle: booksMap.get(loan.bookId)?.title || "-",
+                    memberName: membersMap.get(loan.memberId)?.name || "-",
+                    loanDate: loan.loanDate,
+                    dueDate: loan.dueDate
                 };
-                checkStudent();
-            }
-        };
-
-        window.logout = () => {
-            currentUser = null;
-            currentRole = null;
-            renderLogin();
-        };
-
-        async function startApp() {
-            const isConnected = await initializeDatabase();
-            if (isConnected) renderLogin();
-            else document.getElementById('app').innerHTML = '<div class="container"><div class="card"><h3>Koneksi Gagal</h3><button onclick="location.reload()">Refresh</button></div></div>';
+            });
         }
-
-        startApp();
+        
+        async function seedInitialData() {
+            try {
+                const adminQuery = query(usersCol, where("username", "==", "admin"));
+                if ((await getDocs(adminQuery)).empty) {
+                    await addDoc(usersCol, { username: "admin", password: "admin123", role: "admin", memberId: null });
+                }
+                if ((await getDocs(booksCol)).empty) {
+                    await addDoc(booksCol, { title: "Cyber Security Essentials", publisher: "TechPress", totalStock: 5, availableStock: 5, cover: "🔒" });
+                    await addDoc(booksCol, { title: "AI & Machine Learning", publisher: "FutureLab", totalStock: 4, availableStock: 4, cover: "🤖" });
+                    await addDoc(booksCol, { title: "Cloud Architecture", publisher: "CloudPub", totalStock: 3, availableStock: 3, cover: "☁️" });
+                }
+                if ((await getDocs(membersCol)).empty) {
+                    const m1 = await addDoc(membersCol, { name: "Budi Santoso", className: "XI RPL 1", phone: "08123456789", registerDate: new Date().toISOString() });
+                    const m2 = await addDoc(membersCol, { name: "Siti Nurhaliza", className: "XII RPL 2", phone: "08234567890", registerDate: new Date().toISOString() });
+                    await addDoc(usersCol, { username: "budi", password: "budi123", role: "member", memberId: m1.id });
+                    await addDoc(usersCol, { username: "siti", password: "siti123", role: "member", memberId: m2.id });
+                }
+            } catch(e) { console.error(e); }
+        }
+        seedInitialData();
+        
+        function setupPasswordToggle(toggleId, inputId) {
+            const toggle = document.getElementById(toggleId);
+            const input = document.getElementById(inputId);
+            if (toggle && input) {
+                toggle.addEventListener('click', () => {
+                    const type = input.getAttribute('type');
+                    if (type === 'password') {
+                        input.setAttribute('type', 'text');
+                        toggle.classList.remove('fa-eye-slash');
+                        toggle.classList.add('fa-eye');
+                    } else {
+                        input.setAttribute('type', 'password');
+                        toggle.classList.remove('fa-eye');
+                        toggle.classList.add('fa-eye-slash');
+                    }
+                });
+            }
+        }
+        
+        async function handleLogin(username, password) {
+            if (!username || !password) { showToast("Isi username & password!", true); return false; }
+            try {
+                const q = query(usersCol, where("username", "==", username), where("password", "==", password));
+                const snap = await getDocs(q);
+                if (snap.empty) { showToast("Login gagal! Periksa kembali.", true); return false; }
+                currentUser = { id: snap.docs[0].id, ...snap.docs[0].data() };
+                localStorage.setItem("libflow_user", JSON.stringify({ id: currentUser.id, username: currentUser.username, role: currentUser.role, memberId: currentUser.memberId }));
+                showToast(`Welcome back, ${currentUser.username}! 🎉`);
+                renderDashboard();
+                return true;
+            } catch(e) { showToast("Error system", true); return false; }
+        }
+        
+        async function handleRegister(name, className, phone, username, password) {
+            if (!name || !className || !username || !password) { showToast("Semua field wajib diisi!", true); return false; }
+            try {
+                const existing = await getDocs(query(usersCol, where("username", "==", username)));
+                if (!existing.empty) { showToast("Username sudah dipakai!", true); return false; }
+                const memberRef = await addDoc(membersCol, { name, className, phone, registerDate: new Date().toISOString() });
+                await addDoc(usersCol, { username, password, role: "member", memberId: memberRef.id });
+                showToast("Registrasi berhasil! Silakan login.");
+                return true;
+            } catch(e) { showToast("Gagal registrasi", true); return false; }
+        }
+        
+        function openModal(title, bodyHtml, onConfirm) {
+            document.getElementById("modalTitle").innerText = title;
+            document.getElementById("modalBody").innerHTML = bodyHtml;
+            document.getElementById("modalForm").classList.remove("hidden");
+            modalCallback = onConfirm;
+        }
+        
+        function closeModal() {
+            document.getElementById("modalForm").classList.add("hidden");
+            modalCallback = null;
+        }
+        
+        document.getElementById("closeModalBtn").onclick = closeModal;
+        document.getElementById("modalCancelBtn").onclick = closeModal;
+        document.getElementById("modalConfirmBtn").onclick = () => { if (modalCallback) modalCallback(); closeModal(); };
+        
+        // Dashboard Render
+        async function renderDashboard() {
+            document.getElementById("authSection").classList.add("hidden");
+            document.getElementById("dashboardSection").classList.remove("hidden");
+            document.getElementById("userNameDisplay").innerText = currentUser.username;
+            document.getElementById("userRoleBadge").innerHTML = currentUser.role === 'admin' ? '<i class="fas fa-crown mr-1"></i>Admin' : '<i class="fas fa-user-astronaut mr-1"></i>Member';
+            
+            const navTabs = document.getElementById("navTabs");
+            navTabs.innerHTML = "";
+            
+            if (currentUser.role === 'admin') {
+                const menus = [
+                    { id: "adminBooks", label: "📚 Buku", icon: "fa-book" },
+                    { id: "adminMembers", label: "👥 Anggota", icon: "fa-users" },
+                    { id: "adminLoans", label: "📋 Peminjaman", icon: "fa-hand-holding" },
+                    { id: "adminReturns", label: "🔄 Pengembalian", icon: "fa-undo-alt" },
+                    { id: "adminFines", label: "💰 Denda", icon: "fa-coins" }
+                ];
+                menus.forEach(menu => {
+                    const btn = document.createElement("button");
+                    btn.className = "px-5 py-2.5 rounded-full bg-gray-800/50 hover:bg-cyan-500/20 text-cyan-300 font-medium transition-all flex items-center gap-2 border border-cyan-500/30";
+                    btn.innerHTML = `<i class="fas ${menu.icon}"></i> ${menu.label}`;
+                    btn.onclick = () => renderAdminContent(menu.id);
+                    navTabs.appendChild(btn);
+                });
+                renderAdminContent("adminBooks");
+            } else {
+                const menus = [
+                    { id: "userBorrow", label: "📖 Pinjam Buku", icon: "fa-hand-holding-heart" },
+                    { id: "userLoans", label: "📌 Peminjaman Saya", icon: "fa-list" },
+                    { id: "userReturn", label: "🔄 Kembalikan", icon: "fa-undo" },
+                    { id: "userFines", label: "💰 Denda Saya", icon: "fa-coins" }
+                ];
+                menus.forEach(menu => {
+                    const btn = document.createElement("button");
+                    btn.className = "px-5 py-2.5 rounded-full bg-gray-800/50 hover:bg-cyan-500/20 text-cyan-300 font-medium transition-all flex items-center gap-2 border border-cyan-500/30";
+                    btn.innerHTML = `<i class="fas ${menu.icon}"></i> ${menu.label}`;
+                    btn.onclick = () => renderUserContent(menu.id);
+                    navTabs.appendChild(btn);
+                });
+                renderUserContent("userBorrow");
+            }
+        }
+        
+        // ============ ADMIN SECTIONS (Simplified) ============
+        async function renderAdminContent(section) {
+            const container = document.getElementById("contentPanel");
+            if (section === "adminBooks") await renderAdminBooks(container);
+            else if (section === "adminMembers") await renderAdminMembers(container);
+            else if (section === "adminLoans") await renderAdminLoans(container);
+            else if (section === "adminReturns") await renderAdminReturns(container);
+            else if (section === "adminFines") await renderAdminFines(container);
+        }
+        
+        async function renderAdminBooks(container) {
+            let books = await loadBooksForce();
+            container.innerHTML = `
+                <div class="flex justify-between items-center flex-wrap mb-5">
+                    <h2 class="text-2xl font-bold text-cyan-400"><i class="fas fa-database mr-2"></i>Manajemen Buku</h2>
+                    <button id="addBookBtn" class="btn-cyber text-white px-5 py-2.5 rounded-xl shadow-lg"><i class="fas fa-plus mr-2"></i>Tambah Buku</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full table-cyber">
+                        <thead class="bg-gray-800/50">
+                            <tr><th>Cover</th><th>Judul</th><th>Penerbit</th><th>Stok</th><th>Tersedia</th><th>Aksi</th></tr>
+                        </thead>
+                        <tbody id="booksTableBody"></tbody>
+                    </table>
+                </div>
+            `;
+            const renderTable = () => {
+                document.getElementById("booksTableBody").innerHTML = books.map(b => `
+                    <tr><td class="text-3xl">${b.cover || '📚'}</td><td class="font-semibold">${b.title}</td><td>${b.publisher || '-'}</td><td>${b.totalStock}</td><td><span class="badge-cyber">${b.availableStock}</span></td><td><button data-id="${b.id}" class="editBookBtn text-cyan-400 mr-3 hover:text-cyan-300"><i class="fas fa-edit"></i></button><button data-id="${b.id}" class="deleteBookBtn text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button></td></tr>
+                `).join('');
+                document.querySelectorAll(".editBookBtn").forEach(btn => btn.onclick = () => editBook(btn.dataset.id));
+                document.querySelectorAll(".deleteBookBtn").forEach(btn => btn.onclick = () => deleteBook(btn.dataset.id));
+            };
+            renderTable();
+            
+            document.getElementById("addBookBtn").onclick = () => {
+                openModal("Tambah Buku", `
+                    <div class="mb-3"><label class="block mb-2 text-cyan-300">Cover (emoji)</label><input id="bookCover" class="input-cyber w-full p-2 rounded" value="📚"></div>
+                    <div class="mb-3"><label class="block mb-2 text-cyan-300">Judul</label><input id="bookTitle" class="input-cyber w-full p-2 rounded"></div>
+                    <div class="mb-3"><label class="block mb-2 text-cyan-300">Penerbit</label><input id="bookPublisher" class="input-cyber w-full p-2 rounded"></div>
+                    <div class="mb-3"><label class="block mb-2 text-cyan-300">Stok Total</label><input id="bookStock" type="number" class="input-cyber w-full p-2 rounded"></div>
+                `, async () => {
+                    const title = document.getElementById("bookTitle").value;
+                    const totalStock = parseInt(document.getElementById("bookStock").value);
+                    if (!title || isNaN(totalStock)) { showToast("Data tidak lengkap", true); return; }
+                    await addDoc(booksCol, { title, publisher: document.getElementById("bookPublisher").value, totalStock, availableStock: totalStock, cover: document.getElementById("bookCover").value });
+                    books = await loadBooksForce();
+                    renderTable();
+                    showToast("Buku berhasil ditambahkan! ✨");
+                });
+            };
+            
+            window.editBook = async (id) => {
+                const ref = doc(booksCol, id);
+                const data = (await getDoc(ref)).data();
+                openModal("Edit Buku", `
+                    <div class="mb-3"><label>Cover</label><input id="bookCover" class="input-cyber w-full p-2 rounded" value="${data.cover || '📚'}"></div>
+                    <div class="mb-3"><label>Judul</label><input id="bookTitle" class="input-cyber w-full p-2 rounded" value="${data.title}"></div>
+                    <div class="mb-3"><label>Penerbit</label><input id="bookPublisher" class="input-cyber w-full p-2 rounded" value="${data.publisher || ''}"></div>
+                    <div class="mb-3"><label>Stok Total</label><input id="bookStock" type="number" class="input-cyber w-full p-2 rounded" value="${data.totalStock}"></div>
+                `, async () => {
+                    const newTotal = parseInt(document.getElementById("bookStock").value);
+                    const diff = newTotal - data.totalStock;
+                    await updateDoc(ref, {
+                        cover: document.getElementById("bookCover").value,
+                        title: document.getElementById("bookTitle").value,
+                        publisher: document.getElementById("bookPublisher").value,
+                        totalStock: newTotal,
+                        availableStock: data.availableStock + diff
+                    });
+                    books = await loadBooksForce();
+                    renderTable();
+                    showToast("Buku updated! 🔄");
+                });
+            };
+            
+            window.deleteBook = async (id) => {
+                if (confirm("Yakin hapus buku ini?")) {
+                    await deleteDoc(doc(booksCol, id));
+                    books = await loadBooksForce();
+                    renderTable();
+                    showToast("Buku dihapus");
+                }
+            };
+        }
+        
+        async function renderAdminMembers(container) {
+            let members = await loadMembersForce();
+            let users = await loadUsersForce();
+            let loans = await loadLoans();
+            const activeCount = new Map();
+            loans.forEach(l => { if (l.status === 'borrowed') activeCount.set(l.memberId, (activeCount.get(l.memberId) || 0) + 1); });
+            const userMap = new Map();
+            users.forEach(u => { if (u.memberId) userMap.set(u.memberId, u); });
+            
+            container.innerHTML = `
+                <div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold text-cyan-400"><i class="fas fa-users mr-2"></i>Manajemen Anggota</h2><button id="addMemberBtn" class="btn-cyber text-white px-5 py-2.5 rounded-xl"><i class="fas fa-user-plus mr-2"></i>Tambah Anggota</button></div>
+                <div class="overflow-x-auto"><table class="w-full table-cyber"><thead class="bg-gray-800/50"><tr><th>Nama</th><th>Kelas</th><th>Telepon</th><th>Username</th><th>Status Pinjam</th><th>Aksi</th></tr></thead><tbody id="membersTableBody"></tbody></table></div>
+            `;
+            const renderTable = () => {
+                document.getElementById("membersTableBody").innerHTML = members.map(m => {
+                    const user = userMap.get(m.id);
+                    const count = activeCount.get(m.id) || 0;
+                    return `<tr><td class="font-semibold">${m.name}</td><td>${m.className}</td><td>${m.phone}</td><td class="text-cyan-300">${user?.username || '-'}</td><td><span class="badge-cyber">${count} buku</span></td><td><button data-id="${m.id}" class="editMemberBtn text-cyan-400 mr-2"><i class="fas fa-edit"></i></button><button data-id="${m.id}" class="deleteMemberBtn text-red-400"><i class="fas fa-trash"></i></button></td></tr>`;
+                }).join('');
+                document.querySelectorAll(".editMemberBtn").forEach(btn => btn.onclick = () => editMember(btn.dataset.id));
+                document.querySelectorAll(".deleteMemberBtn").forEach(btn => btn.onclick = () => deleteMember(btn.dataset.id));
+            };
+            renderTable();
+            
+            document.getElementById("addMemberBtn").onclick = () => {
+                openModal("Tambah Anggota", `
+                    <div><input id="memName" placeholder="Nama" class="input-cyber w-full mb-2 p-2 rounded"><input id="memClass" placeholder="Kelas" class="input-cyber w-full mb-2 p-2 rounded"><input id="memPhone" placeholder="Telepon" class="input-cyber w-full mb-2 p-2 rounded"><input id="memUsername" placeholder="Username" class="input-cyber w-full mb-2 p-2 rounded"><input id="memPassword" type="password" placeholder="Password" class="input-cyber w-full p-2 rounded"></div>
+                `, async () => {
+                    const name = document.getElementById("memName").value;
+                    const className = document.getElementById("memClass").value;
+                    const username = document.getElementById("memUsername").value;
+                    const password = document.getElementById("memPassword").value;
+                    if (!name || !className || !username || !password) { showToast("Isi semua!", true); return; }
+                    const existing = await getDocs(query(usersCol, where("username", "==", username)));
+                    if (!existing.empty) { showToast("Username sudah ada", true); return; }
+                    const memberRef = await addDoc(membersCol, { name, className, phone: document.getElementById("memPhone").value, registerDate: new Date().toISOString() });
+                    await addDoc(usersCol, { username, password, role: "member", memberId: memberRef.id });
+                    members = await loadMembersForce();
+                    users = await loadUsersForce();
+                    renderTable();
+                    showToast("Anggota ditambahkan! 🎉");
+                });
+            };
+            
+            window.editMember = async (id) => {
+                const memberRef = doc(membersCol, id);
+                const data = (await getDoc(memberRef)).data();
+                const userQ = await getDocs(query(usersCol, where("memberId", "==", id)));
+                let username = '', password = '';
+                if (!userQ.empty) { username = userQ.docs[0].data().username; password = userQ.docs[0].data().password; }
+                openModal("Edit Anggota", `
+                    <div><input id="editName" value="${data.name}" class="input-cyber w-full mb-2 p-2 rounded"><input id="editClass" value="${data.className}" class="input-cyber w-full mb-2 p-2 rounded"><input id="editPhone" value="${data.phone}" class="input-cyber w-full mb-2 p-2 rounded"><input id="editUsername" value="${username}" class="input-cyber w-full mb-2 p-2 rounded"><input id="editPassword" value="${password}" class="input-cyber w-full p-2 rounded"></div>
+                `, async () => {
+                    await updateDoc(memberRef, { name: document.getElementById("editName").value, className: document.getElementById("editClass").value, phone: document.getElementById("editPhone").value });
+                    if (!userQ.empty) await updateDoc(doc(usersCol, userQ.docs[0].id), { username: document.getElementById("editUsername").value, password: document.getElementById("editPassword").value });
+                    members = await loadMembersForce();
+                    users = await loadUsersForce();
+                    renderTable();
+                    showToast("Anggota diupdate");
+                });
+            };
+            
+            window.deleteMember = async (id) => {
+                if (confirm("Hapus anggota?")) {
+                    const userQ = await getDocs(query(usersCol, where("memberId", "==", id)));
+                    if (!userQ.empty) await deleteDoc(doc(usersCol, userQ.docs[0].id));
+                    await deleteDoc(doc(membersCol, id));
+                    members = await loadMembersForce();
+                    users = await loadUsersForce();
+                    renderTable();
+                    showToast("Anggota dihapus");
+                }
+            };
+        }
+        
+        async function renderAdminLoans(container) {
+            let loans = await loadLoans();
+            let books = await loadBooksForce();
+            let members = await loadMembersForce();
+            container.innerHTML = `
+                <div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold text-cyan-400"><i class="fas fa-hand-holding mr-2"></i>Peminjaman Aktif</h2><button id="newLoanBtn" class="btn-cyber text-white px-5 py-2 rounded-xl"><i class="fas fa-plus mr-2"></i>Pinjam Buku</button></div>
+                <div class="overflow-x-auto"><table class="w-full table-cyber"><thead class="bg-gray-800/50"><tr><th>Peminjam</th><th>Buku</th><th>Tgl Pinjam</th><th>Jatuh Tempo</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="loansTbody"></tbody></table></div>
+            `;
+            const render = () => {
+                document.getElementById("loansTbody").innerHTML = loans.map(l => {
+                    const overdue = l.status === 'borrowed' && isOverdue(l.dueDate);
+                    const status = l.status === 'returned' ? 'Dikembalikan' : (overdue ? 'Terlambat' : 'Dipinjam');
+                    return `<tr><td>${l.memberName}</td><td>${l.bookTitle}</td><td>${formatDate(l.loanDate)}</td><td>${formatDate(l.dueDate)}</td><td><span class="badge-cyber">${status}</span></td><td>${l.status === 'borrowed' ? `<button data-id="${l.id}" class="returnLoanBtn bg-green-600/50 hover:bg-green-600 px-3 py-1 rounded text-sm mr-1">Kembalikan</button><button data-id="${l.id}" class="deleteLoanBtn bg-red-600/50 hover:bg-red-600 px-3 py-1 rounded text-sm">Hapus</button>` : `<button data-id="${l.id}" class="deleteLoanBtn bg-red-600/50 hover:bg-red-600 px-3 py-1 rounded text-sm">Hapus</button>`}</td></tr>`;
+                }).join('');
+                document.querySelectorAll(".returnLoanBtn").forEach(btn => btn.onclick = () => processReturn(btn.dataset.id));
+                document.querySelectorAll(".deleteLoanBtn").forEach(btn => btn.onclick = () => deleteLoan(btn.dataset.id));
+            };
+            render();
+            
+            document.getElementById("newLoanBtn").onclick = () => {
+                openModal("Form Peminjaman", `
+                    <select id="loanMember" class="input-cyber w-full p-2 rounded mb-3">${members.map(m => `<option value="${m.id}">${m.name}</option>`).join('')}</select>
+                    <select id="loanBook" class="input-cyber w-full p-2 rounded">${books.map(b => `<option value="${b.id}">${b.cover} ${b.title} (${b.availableStock})</option>`).join('')}</select>
+                `, async () => {
+                    const bookId = document.getElementById("loanBook").value;
+                    const memberId = document.getElementById("loanMember").value;
+                    const bookRef = doc(booksCol, bookId);
+                    const book = await getDoc(bookRef);
+                    if (book.data().availableStock <= 0) { showToast("Stok habis!", true); return; }
+                    const loanDate = new Date().toISOString();
+                    await addDoc(loansCol, { bookId, memberId, loanDate, dueDate: getDueDate(loanDate), status: "borrowed" });
+                    await updateDoc(bookRef, { availableStock: book.data().availableStock - 1 });
+                    loans = await loadLoans();
+                    render();
+                    showToast("Peminjaman sukses! 🚀");
+                });
+            };
+            
+            window.processReturn = async (loanId) => {
+                const loanRef = doc(loansCol, loanId);
+                const loan = await getDoc(loanRef);
+                if (!loan.exists() || loan.data().status === 'returned') return;
+                const data = loan.data();
+                const returnDate = new Date().toISOString();
+                const fee = calculateLateFee(data.dueDate, returnDate);
+                await addDoc(returnsCol, { loanId, returnDate, lateFee: fee, finePaid: false });
+                await updateDoc(loanRef, { status: "returned", returnDate });
+                const bookRef = doc(booksCol, data.bookId);
+                const book = await getDoc(bookRef);
+                if (book.exists()) await updateDoc(bookRef, { availableStock: book.data().availableStock + 1 });
+                showToast(fee ? `Denda Rp${fee.toLocaleString()}` : "Pengembalian sukses!");
+                loans = await loadLoans();
+                render();
+            };
+            
+            window.deleteLoan = async (loanId) => {
+                if (!confirm("Hapus peminjaman?")) return;
+                const loanRef = doc(loansCol, loanId);
+                const loan = await getDoc(loanRef);
+                if (loan.exists() && loan.data().status === 'borrowed') {
+                    const bookRef = doc(booksCol, loan.data().bookId);
+                    const book = await getDoc(bookRef);
+                    if (book.exists()) await updateDoc(bookRef, { availableStock: book.data().availableStock + 1 });
+                }
+                await deleteDoc(loanRef);
+                loans = await loadLoans();
+                render();
+                showToast("Peminjaman dihapus");
+            };
+        }
+        
+        async function renderAdminReturns(container) {
+            let returns = await loadReturns();
+            container.innerHTML = `<h2 class="text-2xl font-bold mb-4 text-cyan-400"><i class="fas fa-history mr-2"></i>Riwayat Pengembalian</h2><div class="overflow-x-auto"><table class="w-full table-cyber"><thead class="bg-gray-800/50"><tr><th>Peminjam</th><th>Buku</th><th>Tgl Kembali</th><th>Denda</th><th>Status</th></tr></thead><tbody>${returns.map(r => `<tr><td>${r.memberName}</td><td>${r.bookTitle}</td><td>${formatDate(r.returnDate)}</td><td class="${r.lateFee > 0 ? 'text-pink-400' : 'text-gray-400'}">Rp${(r.lateFee || 0).toLocaleString()}</td><td>${r.finePaid ? '<span class="text-green-400">Lunas</span>' : (r.lateFee > 0 ? '<span class="text-yellow-400">Belum Lunas</span>' : '-')}</td></tr>`).join('')}</tbody></table></div>`;
+        }
+        
+        async function renderAdminFines(container) {
+            let returns = await loadReturns();
+            let unpaid = returns.filter(r => r.lateFee > 0 && !r.finePaid);
+            container.innerHTML = `<h2 class="text-2xl font-bold mb-4 text-cyan-400"><i class="fas fa-coins mr-2"></i>Denda Tertunda</h2><div class="overflow-x-auto"><table class="w-full table-cyber"><thead class="bg-gray-800/50"><tr><th>Peminjam</th><th>Buku</th><th>Denda</th><th>Aksi</th></tr></thead><tbody>${unpaid.map(r => `<tr><td>${r.memberName}</td><td>${r.bookTitle}</td><td class="text-pink-400">Rp${r.lateFee.toLocaleString()}</td><td><button data-id="${r.id}" class="markPaidAdmin bg-green-600/70 hover:bg-green-600 px-3 py-1 rounded text-sm">Tandai Lunas</button></td></tr>`).join('')}</tbody></table></div>`;
+            setTimeout(() => {
+                document.querySelectorAll(".markPaidAdmin").forEach(btn => btn.onclick = async () => {
+                    await updateDoc(doc(returnsCol, btn.dataset.id), { finePaid: true });
+                    showToast("Denda dilunaskan ✅");
+                    renderAdminFines(container);
+                });
+            }, 100);
+        }
+        
+        // ============ USER SECTIONS (Simplified) ============
+        async function renderUserContent(section) {
+            const container = document.getElementById("contentPanel");
+            if (section === "userBorrow") await renderUserBorrow(container);
+            else if (section === "userLoans") await renderUserLoans(container);
+            else if (section === "userReturn") await renderUserReturn(container);
+            else if (section === "userFines") await renderUserFines(container);
+        }
+        
+        async function renderUserBorrow(container) {
+            if (!currentUser.memberId) return;
+            let books = await loadBooksForce();
+            container.innerHTML = `<h2 class="text-2xl font-bold mb-4 text-cyan-400"><i class="fas fa-book-open mr-2"></i>Koleksi Buku</h2><input id="searchBook" placeholder="Cari buku..." class="input-cyber w-full md:w-80 p-2 rounded mb-4"><div id="bookGrid" class="grid md:grid-cols-3 lg:grid-cols-4 gap-4"></div>`;
+            const render = (bk) => {
+                document.getElementById("bookGrid").innerHTML = bk.map(b => `
+                    <div class="glass-morph-light p-4 rounded-xl text-center card-hover">
+                        <div class="text-6xl mb-2">${b.cover || '📚'}</div>
+                        <h3 class="font-bold text-white">${b.title}</h3>
+                        <p class="text-sm text-gray-400">${b.publisher || '-'}</p>
+                        <p class="text-cyan-400 text-sm mt-1">Stok: ${b.availableStock}</p>
+                        ${b.availableStock > 0 ? `<button data-id="${b.id}" class="borrowBtn mt-3 w-full btn-cyber text-white py-2 rounded-lg">Pinjam</button>` : '<button disabled class="mt-3 w-full bg-gray-700 py-2 rounded-lg text-gray-400">Habis</button>'}
+                    </div>
+                `).join('');
+                document.querySelectorAll(".borrowBtn").forEach(btn => btn.onclick = async () => {
+                    const bookId = btn.dataset.id;
+                    const bookRef = doc(booksCol, bookId);
+                    const book = await getDoc(bookRef);
+                    if (book.data().availableStock <= 0) return showToast("Stok habis!", true);
+                    const existing = await getDocs(query(loansCol, where("memberId", "==", currentUser.memberId), where("bookId", "==", bookId), where("status", "==", "borrowed")));
+                    if (!existing.empty) return showToast("Anda masih meminjam buku ini", true);
+                    const loanDate = new Date().toISOString();
+                    await addDoc(loansCol, { bookId, memberId: currentUser.memberId, loanDate, dueDate: getDueDate(loanDate), status: "borrowed" });
+                    await updateDoc(bookRef, { availableStock: book.data().availableStock - 1 });
+                    showToast(`Buku dipinjam! Jatuh tempo: ${formatDate(getDueDate(loanDate))}`);
+                    renderUserBorrow(container);
+                });
+            };
+            render(books);
+            document.getElementById("searchBook").addEventListener("input", (e) => render(books.filter(b => b.title.toLowerCase().includes(e.target.value.toLowerCase()))));
+        }
+        
+        async function renderUserLoans(container) {
+            let all = await loadLoans();
+            let mine = all.filter(l => l.memberId === currentUser.memberId);
+            container.innerHTML = `<h2 class="text-2xl font-bold mb-4 text-cyan-400"><i class="fas fa-list mr-2"></i>Peminjaman Saya</h2><div class="overflow-x-auto"><table class="w-full table-cyber"><thead class="bg-gray-800/50"><tr><th>Buku</th><th>Tgl Pinjam</th><th>Jatuh Tempo</th><th>Status</th></tr></thead><tbody>${mine.map(l => `<tr><td>${l.bookTitle}</td><td>${formatDate(l.loanDate)}</td><td>${formatDate(l.dueDate)}</td><td><span class="badge-cyber">${l.status === 'borrowed' ? 'Aktif' : 'Dikembalikan'}</span></td></tr>`).join('')}</tbody></table></div>`;
+        }
+        
+        async function renderUserReturn(container) {
+            let all = await loadLoans();
+            let active = all.filter(l => l.memberId === currentUser.memberId && l.status === 'borrowed');
+            container.innerHTML = `<h2 class="text-2xl font-bold mb-4 text-cyan-400"><i class="fas fa-undo-alt mr-2"></i>Kembalikan Buku</h2><div class="grid gap-3">${active.length === 0 ? '<div class="glass-morph-light p-4 rounded-xl text-center">Tidak ada buku yang dipinjam</div>' : active.map(l => `<div class="glass-morph-light p-4 rounded-xl flex justify-between items-center"><div><div class="text-2xl inline-block mr-3">${l.bookCover}</div><span class="font-semibold">${l.bookTitle}</span><br><small class="text-gray-400">Jatuh tempo: ${formatDate(l.dueDate)}</small></div><button data-id="${l.id}" class="returnBtn btn-cyber-secondary text-white px-5 py-2 rounded-xl">Kembalikan</button></div>`).join('')}</div>`;
+            document.querySelectorAll(".returnBtn").forEach(btn => btn.onclick = async () => {
+                const loanId = btn.dataset.id;
+                const loanRef = doc(loansCol, loanId);
+                const loan = await getDoc(loanRef);
+                if (loan.data().status === 'returned') return;
+                const data = loan.data();
+                const returnDate = new Date().toISOString();
+                const fee = calculateLateFee(data.dueDate, returnDate);
+                await addDoc(returnsCol, { loanId, returnDate, lateFee: fee, finePaid: false });
+                await updateDoc(loanRef, { status: "returned", returnDate });
+                const bookRef = doc(booksCol, data.bookId);
+                const book = await getDoc(bookRef);
+                if (book.exists()) await updateDoc(bookRef, { availableStock: book.data().availableStock + 1 });
+                showToast(fee ? `Denda Rp${fee.toLocaleString()} silakan bayar` : "Pengembalian sukses!");
+                renderUserReturn(container);
+            });
+        }
+        
+        async function renderUserFines(container) {
+            let allReturns = await loadReturns();
+            let allLoans = await loadLoans();
+            let myLoanIds = allLoans.filter(l => l.memberId === currentUser.memberId).map(l => l.id);
+            let myFines = allReturns.filter(r => myLoanIds.includes(r.loanId) && r.lateFee > 0);
+            container.innerHTML = `<h2 class="text-2xl font-bold mb-4 text-cyan-400"><i class="fas fa-coins mr-2"></i>Denda Saya</h2><div class="overflow-x-auto"><table class="w-full table-cyber"><thead class="bg-gray-800/50"><tr><th>Buku</th><th>Denda</th><th>Status</th><th>Aksi</th></tr></thead><tbody>${myFines.map(f => `<tr><td>${f.bookTitle}</td><td class="text-pink-400">Rp${f.lateFee.toLocaleString()}</td><td>${f.finePaid ? '<span class="text-green-400">Lunas</span>' : '<span class="text-yellow-400">Belum Lunas</span>'}</td><td>${!f.finePaid ? `<button data-id="${f.id}" class="payFineBtnUser btn-cyber-secondary text-white px-3 py-1 rounded text-sm">Bayar</button>` : '-'}</td></tr>`).join('')}</tbody></table></div>`;
+            document.querySelectorAll(".payFineBtnUser").forEach(btn => btn.onclick = () => showPaymentModal(btn.dataset.id));
+        }
+        
+        function showPaymentModal(returnId) {
+            const modal = document.getElementById("paymentModal");
+            document.getElementById("paymentBody").innerHTML = `
+                <p class="mb-3 text-cyan-300">Upload bukti pembayaran denda</p>
+                <div class="bg-gray-800/50 p-3 rounded-lg mb-3">
+                    <p class="text-sm"><i class="fas fa-university mr-2"></i>Bank BCA: 1234567890 a.n Perpus Digital</p>
+                    <p class="text-sm mt-1"><i class="fas fa-qrcode mr-2"></i>QRIS: Scan kode berikut</p>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=LibFlowPayment" class="mx-auto mt-2">
+                </div>
+                <input type="file" id="proofImage" accept="image/*" class="input-cyber w-full p-2 rounded">
+                <p class="text-xs text-gray-400 mt-2">Upload screenshot bukti transfer</p>
+            `;
+            modal.classList.remove("hidden");
+            document.getElementById("confirmPaymentBtn").onclick = async () => {
+                const fileInput = document.getElementById("proofImage");
+                if (!fileInput.files.length) { showToast("Upload bukti dulu!", true); return; }
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    await updateDoc(doc(returnsCol, returnId), { paymentProof: e.target.result, finePaid: true });
+                    showToast("Bukti terkirim! Admin akan konfirmasi.");
+                    modal.classList.add("hidden");
+                    renderUserFines(document.getElementById("contentPanel"));
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            };
+            document.getElementById("closePaymentBtn").onclick = () => modal.classList.add("hidden");
+            document.getElementById("cancelPaymentBtn").onclick = () => modal.classList.add("hidden");
+        }
+        
+        // Event Listeners
+        setupPasswordToggle('toggleLoginPassword', 'loginPassword');
+        setupPasswordToggle('toggleRegPassword', 'regPassword');
+        document.getElementById("doLoginBtn").onclick = () => handleLogin(document.getElementById("loginUsername").value, document.getElementById("loginPassword").value);
+        document.getElementById("doRegisterBtn").onclick = () => handleRegister(document.getElementById("regName").value, document.getElementById("regClass").value, document.getElementById("regPhone").value, document.getElementById("regUsername").value, document.getElementById("regPassword").value);
+        document.getElementById("loginTabBtn").onclick = () => {
+            document.getElementById("loginForm").classList.remove("hidden");
+            document.getElementById("registerForm").classList.add("hidden");
+            document.getElementById("loginTabBtn").className = "w-1/2 py-2.5 font-semibold rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg";
+            document.getElementById("registerTabBtn").className = "w-1/2 py-2.5 font-semibold rounded-xl text-gray-300";
+        };
+        document.getElementById("registerTabBtn").onclick = () => {
+            document.getElementById("registerForm").classList.remove("hidden");
+            document.getElementById("loginForm").classList.add("hidden");
+            document.getElementById("registerTabBtn").className = "w-1/2 py-2.5 font-semibold rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg";
+            document.getElementById("loginTabBtn").className = "w-1/2 py-2.5 font-semibold rounded-xl text-gray-300";
+        };
+        document.getElementById("logoutBtn").onclick = () => {
+            localStorage.removeItem("libflow_user");
+            currentUser = null;
+            document.getElementById("dashboardSection").classList.add("hidden");
+            document.getElementById("authSection").classList.remove("hidden");
+            showToast("Logged out 👋");
+        };
+        
+        const savedUser = localStorage.getItem("libflow_user");
+        if (savedUser) {
+            try { currentUser = JSON.parse(savedUser); renderDashboard(); }
+            catch(e) { console.error(e); }
+        } else {
+            document.getElementById("authSection").classList.remove("hidden");
+            document.getElementById("dashboardSection").classList.add("hidden");
+        }
     </script>
 </body>
 </html>
